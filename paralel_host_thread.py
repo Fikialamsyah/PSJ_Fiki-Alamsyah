@@ -19,8 +19,8 @@ def check_host(ip):
 # proses multithreading
 with concurrent.futures.ThreadPoolExecutor() as executor:
     results = executor.map(check_host, hosts)
-    for results in results:
-        print(results)
+    for result in results:
+        print(result)
 
 # waktu akhir
 T2 = time.perf_counter()
