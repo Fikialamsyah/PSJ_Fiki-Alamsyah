@@ -1,39 +1,27 @@
 import subprocess
-import multiprocessing
+import concurrent.futures
 import time
 
 # waktu awal
 T1 = time.perf_counter()
 
-# index awal
-i = 0
-
 # list ip
 hosts = ['192.168.1.1', '192.168.1.2', '192.168.1.3', '8.8.8.8', '8.8.4.4']
 
 # fungsi cek host
-def check_host():
-    status, result = subprocess.getstatusoutput("ping -c1 " + hosts[i])
+def check_host(ip):
+    status, result = subprocess.getstatusoutput("ping -c1 " + ip)
     if (status == 0):
-        print(f'Host {hosts[i]} is UP')
+        return f'Host {ip} is UP'
     else:
-        print(f'Host {hosts[i]} is DOWN')
+        return f'Host {ip} is DOWN'
 
+# proses multi processing
+with concurrent.futures.ProcessPoolExecutor() as executor:
+    results = executor.map(check_host, hosts)
+    for results in results:
+        print(results)
 
-Processes = []
-# looping multiprocessing
-for x in range(len(hosts)):
-    P = multiprocessing.Process(target=check_host)
-    P.start()
-    Processes.append(P)
-    # index bertambah
-    i += 1
-
-# looping join
-for process in Processes:
-    process.join()
-
-# waktu akhir
 T2 = time.perf_counter()
 
 # cetak total waktu
