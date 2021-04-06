@@ -16,13 +16,12 @@ while(True):
     def check_host(ip):
         status, result = subprocess.getstatusoutput("ping -c1 " + ip)
         csvFile = open('output.csv', mode='a')
-        fieldnames = ['datetime', 'ip', 'up']
-        csvWriter = csv.DictWriter(csvFile, fieldnames=fieldnames, delimiter=';')
+        csvWriter = csv.writer(csvFile, delimiter=';')
         if (status == 0):
-            csvWriter.writerow({'datetime': datetime.now(), 'ip': ip, 'up':'UP'})
+            csvWriter.writerow([datetime.now(), ip, 'UP'])
             return f"{datetime.now()} : Host {ip} is UP"
         else:
-            csvWriter.writerow({'datetime': datetime.now(), 'ip': ip, 'up': 'DOWN'})
+            csvWriter.writerow([datetime.now(), ip, 'UP'])
             return f'{datetime.now()} : Host {ip} is DOWN'
 
 
