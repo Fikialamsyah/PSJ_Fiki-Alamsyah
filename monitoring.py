@@ -4,16 +4,12 @@ import time
 from datetime import datetime
 import csv
 
-
-# waktu awal
-T1 = time.perf_counter()
-
 while(True):
     # waktu awal
     T1 = time.perf_counter()
 
 
-    with open('/home/fiki/Documents/PSJ_Fiki-Alamsyah/host.cfg') as file:
+    with open('host.cfg') as file:
         readFile = file.read().splitlines()
 
     # fungsi check host
